@@ -13,9 +13,29 @@ export default function Home() {
         <div className="px-8 py-16 md:py-24 relative z-10 text-white flex flex-col items-center text-center">
           <span className="bg-white/20 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-md mb-6">Welcome Offer</span>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 italic tracking-tight">Welcome to Nabil Mart</h1>
-          <p className="text-lg md:text-xl font-medium text-blue-100 max-w-2xl">
-            Everything you need, delivered right to your door. Shop the latest electronics, fashion, and home goods today.
-          </p>
+          <div className="text-base md:text-lg font-medium text-blue-100 max-w-4xl mt-6 text-left space-y-4 bg-white/10 p-6 rounded-2xl backdrop-blur-sm">
+            <p>Nabil Mart-এর ফুড ও গ্রোসারি সেকশন মূলত ব্যস্ত জীবনযাত্রায় আপনার খাঁটি ও সুস্বাদু খাবারের চাহিদা মেটাতে তৈরি। রান্নাঘরের নিত্যপ্রয়োজনীয় উপাদান থেকে শুরু করে ঝটপট ক্ষুধা মেটানোর স্ন্যাক্স—সবকিছুই পাবেন এক ক্লিকে।</p>
+            
+            <h3 className="text-xl font-bold text-white mt-4">🍽️ Nabil Mart Food Items: স্বাদ ও স্বাস্থ্যের দারুণ মেলবন্ধন</h3>
+            <p>প্রতিদিনের ব্যস্ত লাইফে রান্নার ঝক্কি কমাতে এবং খাঁটি খাবারের স্বাদ পেতে Nabil Mart আপনার জন্য নিয়ে এসেছে প্রিমিয়াম কোয়ালিটির ফুড ও গ্রোসারি আইটেম। আমরা বিশ্বাস করি, ভালো খাবারই সুস্থ জীবনের চাবিকাঠি।</p>
+            
+            <h4 className="text-lg font-bold text-white mt-4">🌟 আমাদের ফুড ক্যাটাগরিগুলো:</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li><strong>নিত্যপ্রয়োজনীয় গ্রোসারি:</strong> প্রতিদিনের রান্নার জন্য সেরা মানের চাল, ডাল, তেল, খাঁটি ঘি এবং বাছাই করা সব মসলা।</li>
+              <li><strong>ইনস্ট্যান্ট স্ন্যাক্স ও নুডলস:</strong> হুটকরে আসা ক্ষুধা মেটানোর জন্য রয়েছে বিভিন্ন ফ্লেভারের নুডলস, পাস্তা, চিপস এবং ক্রিসপি স্ন্যাক্স।</li>
+              <li><strong>সুইট ট্রিটস ও বেভারেজ:</strong> মন ভালো করে দেওয়ার মতো প্রিমিয়াম চকলেট, বিস্কুট, কুকিজ এবং রিফ্রেশিং ড্রিংকস।</li>
+              <li><strong>হেলদি অপশনস:</strong> ডায়েট সচেতনদের জন্য ওটস, কর্নফ্লেক্স এবং পুষ্টিকর ড্রাই ফ্রুটস (বাদাম, কিসমিস, খেজুর ইত্যাদি)।</li>
+            </ul>
+
+            <h4 className="text-lg font-bold text-white mt-4">✨ কেন আমাদের ফুড আইটেম সেরা?</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li><strong>১০০% খাঁটি ও তাজা:</strong> আমরা সরাসরি বিশ্বস্ত সোর্স থেকে পণ্য সংগ্রহ করি, তাই ভেজালের কোনো সুযোগ নেই।</li>
+              <li><strong>হাইজিন ও সেফটি ফার্স্ট:</strong> প্রতিটি ফুড আইটেম অত্যন্ত স্বাস্থ্যকর পরিবেশে প্যাক এবং সংরক্ষণ করা হয়।</li>
+              <li><strong>সঠিক মেয়াদ ও গুণগত মান:</strong> আমরা পণ্যের এক্সপায়ারি ডেট (Expiry Date) এবং গুণগত মান কঠোরভাবে যাচাই করে থাকি।</li>
+            </ul>
+
+            <p className="font-bold text-white mt-4">Nabil Mart-এর সাথে আপনার ডাইনিং টেবিল হোক আরও সমৃদ্ধ। সাশ্রয়ী মূল্যে সেরা ও খাঁটি খাবারটি বেছে নিতে আজই অর্ডার করুন!</p>
+          </div>
         </div>
       </div>
 
