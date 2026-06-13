@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nabil Mart - Storefront</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 font-bold text-2xl tracking-tight flex-shrink-0 text-slate-900">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">N</span>
+                    </div>
+                    Nabil<span class="text-blue-600">Mart</span>
+                </a>
+
+                <!-- Custom Search & Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="font-medium text-slate-600 hover:text-blue-600 transition-colors">Home</a>
+                    
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            placeholder="Search products..." 
+                            class="w-80 bg-slate-100 border-none rounded-full py-2 px-4 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-900"
+                        />
+                    </div>
+
+                    <div class="flex items-center space-x-6">
+                        <button class="flex flex-col items-center text-slate-600 hover:text-blue-600 transition-colors">
+                            <i data-lucide="user" class="h-5 w-5"></i>
+                            <span class="text-xs mt-1 font-medium">Admin</span>
+                        </button>
+
+                        <button class="flex flex-col items-center text-slate-600 hover:text-blue-600 transition-colors relative">
+                            <i data-lucide="shopping-cart" class="h-5 w-5"></i>
+                            <span class="text-xs mt-1 font-medium">Cart</span>
+                            <span class="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">
+                                3
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Hero Banner -->
+        <div class="mb-12 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl overflow-hidden shadow-lg relative border border-slate-200">
+            <div class="absolute inset-0 bg-white/5 mix-blend-overlay"></div>
+            <div class="px-8 py-16 md:py-24 relative z-10 text-white flex flex-col items-center text-center">
+                <span class="bg-white/20 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-md mb-6">Welcome Offer</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 italic tracking-tight">Welcome to Nabil Mart</h1>
+                <p class="text-lg md:text-xl font-medium text-blue-100 max-w-2xl">
+                    Everything you need, delivered right to your door. Shop the latest electronics, fashion, and home goods today.
+                </p>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold text-slate-900">Featured Products</h2>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <!-- Product Card 1 -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+                <div class="relative aspect-square overflow-hidden bg-slate-50 p-4">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=600" alt="Headphones" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-300">
+                </div>
+                <div class="p-6 flex flex-col flex-grow bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Electronics</span>
+                    <h3 class="font-bold text-slate-900 mb-1 line-clamp-2">Premium Wireless Headphones</h3>
+                    <p class="text-xl font-bold text-slate-900 mb-6 mt-auto">৳ 3500</p>
+                    <button class="w-full flex items-center justify-center gap-2 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white py-3 rounded-xl font-bold transition-colors">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Card 2 -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+                <div class="relative aspect-square overflow-hidden bg-slate-50 p-4">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=600" alt="Shoes" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-300">
+                </div>
+                <div class="p-6 flex flex-col flex-grow bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Fashion</span>
+                    <h3 class="font-bold text-slate-900 mb-1 line-clamp-2">Men's Casual Running Shoes</h3>
+                    <p class="text-xl font-bold text-slate-900 mb-6 mt-auto">৳ 2400</p>
+                    <button class="w-full flex items-center justify-center gap-2 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white py-3 rounded-xl font-bold transition-colors">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+                <div class="relative aspect-square overflow-hidden bg-slate-50 p-4">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600" alt="Smartwatch" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-300">
+                </div>
+                <div class="p-6 flex flex-col flex-grow bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Electronics</span>
+                    <h3 class="font-bold text-slate-900 mb-1 line-clamp-2">Smart Fitness Watch Pro</h3>
+                    <p class="text-xl font-bold text-slate-900 mb-6 mt-auto">৳ 4200</p>
+                    <button class="w-full flex items-center justify-center gap-2 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white py-3 rounded-xl font-bold transition-colors">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Card 4 -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+                <div class="relative aspect-square overflow-hidden bg-slate-50 p-4">
+                    <img src="https://images.unsplash.com/photo-1504274066651-8d31a536b11a?auto=format&fit=crop&q=80&w=600" alt="Accessories" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-300">
+                </div>
+                <div class="p-6 flex flex-col flex-grow bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Accessories</span>
+                    <h3 class="font-bold text-slate-900 mb-1 line-clamp-2">Minimalist Leather Wallet</h3>
+                    <p class="text-xl font-bold text-slate-900 mb-6 mt-auto">৳ 1200</p>
+                    <button class="w-full flex items-center justify-center gap-2 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white py-3 rounded-xl font-bold transition-colors">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm mt-auto">
+        <p>&copy; 2026 Nabil Mart. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
