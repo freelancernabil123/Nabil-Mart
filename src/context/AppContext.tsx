@@ -103,7 +103,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const [adminCredentials, setAdminCredentials] = useState(() => {
     const saved = localStorage.getItem('adminCredentials');
-    return saved ? JSON.parse(saved) : { username: 'admin', password: 'admin123' };
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // If they still have the old default, override it to the new one requested
+      if (parsed.username === 'admin' && parsed.password === 'admin123') {
+        return { username: 'nabil07', password: 'nabil.1234' };
+      }
+      return parsed;
+    }
+    return { username: 'nabil07', password: 'nabil.1234' };
   });
 
   useEffect(() => {
