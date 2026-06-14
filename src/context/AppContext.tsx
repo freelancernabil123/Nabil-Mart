@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { collection, onSnapshot, setDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 import { Product, CartItem, Order } from '../types';
 import { initialProducts } from '../data/mockData';
 
@@ -24,20 +26,52 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<Product[]>(() => {
-    const saved = localStorage.getItem('products');
-    return saved ? JSON.parse(saved) : initialProducts;
-  });
-
+  const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>(() => {
     const saved = localStorage.getItem('cart');
     return saved ? JSON.parse(saved) : [];
   });
+  const [orders, setOrders] = useState<Order[]>([]);
 
-  const [orders, setOrders] = useState<Order[]>(() => {
-    const saved = localStorage.getItem('orders');
-    return saved ? JSON.parse(saved) : [];
-  });
+  // Firebase integration
+  useEffect(() => {
+    const unsubscribeProducts = onSnapshot(collection(db, 'products'), (snapshot) => {
+      const prods: Product[] = [];
+      snapshot.forEach(doc => {
+        prods.push({ id: doc.id, ...doc.data() } as Product);
+      });
+
+      // Quick seed if completely empty
+      if (snapshot.empty) {
+        initialProducts.forEach(async (prod) => {
+          try {
+            await setDoc(doc(db, 'products', prod.id), prod);
+          } catch (e) {
+            console.error('Seed error:', e);
+          }
+        });
+      } else {
+        setProducts(prods);
+      }
+    }, (error) => {
+      console.error('Firebase Error in products snapshot:', error);
+    });
+
+    const unsubscribeOrders = onSnapshot(collection(db, 'orders'), (snapshot) => {
+      const ords: Order[] = [];
+      snapshot.forEach(doc => {
+        ords.push({ id: doc.id, ...doc.data() } as Order);
+      });
+      setOrders(ords.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+    }, (error) => {
+      console.error('Firebase Error in orders snapshot:', error);
+    });
+
+    return () => {
+      unsubscribeProducts();
+      unsubscribeOrders();
+    };
+  }, []);
 
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
     const saved = localStorage.getItem('isAdminAuthenticated');
@@ -45,16 +79,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('products', JSON.stringify(products));
-  }, [products]);
-
-  useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
-
-  useEffect(() => {
-    localStorage.setItem('orders', JSON.stringify(orders));
-  }, [orders]);
 
   useEffect(() => {
     localStorage.setItem('isAdminAuthenticated', isAdminAuthenticated.toString());
@@ -86,19 +112,33 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => setCart([]);
 
-  const placeOrder = (orderDetails: Omit<Order, 'id' | 'date' | 'orderStatus'>) => {
+  const placeOrder = async (orderDetails: Omit<Order, 'id' | 'date' | 'orderStatus'>) => {
+    const newOrderId = `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
     const newOrder: Order = {
       ...orderDetails,
-      id: `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+      id: newOrderId,
       date: new Date().toISOString(),
       orderStatus: 'Pending'
     };
+    
+    // We update local state optimistically, though onSnapshot will catch it
     setOrders(prev => [newOrder, ...prev]);
     clearCart();
+
+    try {
+      await setDoc(doc(db, 'orders', newOrderId), newOrder);
+    } catch (err) {
+      console.error('Failed to write order to firestore:', err);
+    }
   };
 
-  const updateOrderStatus = (orderId: string, status: Order['orderStatus']) => {
+  const updateOrderStatus = async (orderId: string, status: Order['orderStatus']) => {
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, orderStatus: status } : o));
+    try {
+      await updateDoc(doc(db, 'orders', orderId), { orderStatus: status });
+    } catch (err) {
+      console.error('Failed to update order status in firestore:', err);
+    }
   };
 
   const [adminCredentials, setAdminCredentials] = useState(() => {
@@ -137,9 +177,33 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setAdminCredentials({ username: newUser, password: newPass });
   };
 
-  const addProduct = (product: Product) => setProducts(prev => [product, ...prev]);
-  const updateProduct = (updatedProduct: Product) => setProducts(prev => prev.map(p => p.id === updatedProduct.id ? updatedProduct : p));
-  const deleteProduct = (id: string) => setProducts(prev => prev.filter(p => p.id !== id));
+  const addProduct = async (product: Product) => {
+    setProducts(prev => [product, ...prev]);
+    try {
+      await setDoc(doc(db, 'products', product.id), product);
+    } catch (err) {
+      console.error('Failed to add product:', err);
+    }
+  };
+  
+  const updateProduct = async (updatedProduct: Product) => {
+    setProducts(prev => prev.map(p => p.id === updatedProduct.id ? updatedProduct : p));
+    try {
+      const { id, ...data } = updatedProduct;
+      await updateDoc(doc(db, 'products', updatedProduct.id), data);
+    } catch (err) {
+      console.error('Failed to update product:', err);
+    }
+  };
+  
+  const deleteProduct = async (id: string) => {
+    setProducts(prev => prev.filter(p => p.id !== id));
+    try {
+      await deleteDoc(doc(db, 'products', id));
+    } catch (err) {
+      console.error('Failed to delete product:', err);
+    }
+  };
 
   return (
     <AppContext.Provider value={{
