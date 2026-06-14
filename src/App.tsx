@@ -15,12 +15,14 @@ import Dashboard from './pages/admin/Dashboard';
 import Orders from './pages/admin/Orders';
 import Products from './pages/admin/Products';
 import Settings from './pages/admin/Settings';
+import AdminMessages from './pages/admin/AdminMessages';
+import ChatWidget from './components/ChatWidget';
 
 export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
+        <div className="min-h-screen bg-[#fafafa] text-slate-800 font-sans flex flex-col selection:bg-purple-200 selection:text-purple-900">
           <Navbar />
           <main className="flex-grow">
             <Routes>
@@ -35,13 +37,21 @@ export default function App() {
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/orders" element={<Orders />} />
               <Route path="/admin/products" element={<Products />} />
+              <Route path="/admin/messages" element={<AdminMessages />} />
               <Route path="/admin/settings" element={<Settings />} />
             </Routes>
           </main>
+
           
-          <footer className="bg-slate-900 text-slate-400 py-8 text-center text-sm">
+          <ChatWidget />
+
+          <footer className="bg-white border-t border-purple-100 text-slate-400 py-8 text-center text-sm relative z-10">
             <p>&copy; {new Date().getFullYear()} Nabil Mart. All rights reserved.</p>
-            <p className="mt-2 text-xs">Note: This is a simulated application without a backend database.</p>
+            <div className="mt-4 flex justify-center gap-4">
+              <a href="https://www.facebook.com/Mnnabil.2024/" target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:text-purple-600 font-medium transition-colors">
+                Follow us on Facebook
+              </a>
+            </div>
           </footer>
         </div>
       </BrowserRouter>

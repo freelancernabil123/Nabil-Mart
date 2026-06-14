@@ -114,6 +114,9 @@ export default function Products() {
                     </td>
                     <td className="p-4">
                       <p className="font-bold text-slate-900">{product.name}</p>
+                      {product.description && (
+                        <p className="text-xs text-slate-500 mt-1 line-clamp-1">{product.description}</p>
+                      )}
                       <span className="inline-block bg-blue-50 text-blue-700 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider mt-1">{product.category}</span>
                     </td>
                     <td className="p-4 font-bold text-slate-900">৳ {product.price}</td>

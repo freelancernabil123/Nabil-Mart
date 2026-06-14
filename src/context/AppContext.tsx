@@ -133,9 +133,37 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateOrderStatus = async (orderId: string, status: Order['orderStatus']) => {
+    
+    // Find the order to see if it has a chatSessionId
+    const targetOrder = orders.find(o => o.id === orderId);
+
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, orderStatus: status } : o));
     try {
       await updateDoc(doc(db, 'orders', orderId), { orderStatus: status });
+
+      if (status === 'Cancelled' && targetOrder?.chatSessionId) {
+        // Send a message to the customer's chat
+        const threadId = targetOrder.chatSessionId;
+        const msgId = `msg_${Math.random().toString(36).substr(2, 9)}`;
+        const cancelMsg = `Update on Order #${orderId}:\nUnfortunately, your order has been cancelled by our administration. Please reach out to us here if you have any questions.`;
+        
+        await setDoc(doc(db, 'messages', msgId), {
+          id: msgId,
+          threadId,
+          senderId: 'admin',
+          senderName: 'System',
+          text: cancelMsg,
+          timestamp: new Date().toISOString()
+        });
+        
+        await setDoc(doc(db, 'threads', threadId), {
+          lastMessage: cancelMsg,
+          timestamp: new Date().toISOString(),
+          unreadAdmin: false,
+          unreadCustomer: true
+        }, { merge: true });
+      }
+
     } catch (err) {
       console.error('Failed to update order status in firestore:', err);
     }
