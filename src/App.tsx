@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/customer/Home';
 import Cart from './pages/customer/Cart';
 import Checkout from './pages/customer/Checkout';
+import TrackOrder from './pages/customer/TrackOrder';
 import AdminLogin from './pages/admin/AdminLogin';
 import Dashboard from './pages/admin/Dashboard';
 import Orders from './pages/admin/Orders';
@@ -30,6 +31,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/track-order" element={<TrackOrder />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLogin />} />

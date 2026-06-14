@@ -59,14 +59,24 @@ export default function Checkout() {
         <CheckCircle className="w-20 h-20 text-purple-600 mx-auto mb-6" />
         <h1 className="text-3xl font-display font-bold text-slate-900 mb-4">Order Placed Successfully!</h1>
         <p className="text-slate-600 mb-8 max-w-md mx-auto">
-          Thank you for exploring Nabil Mart. Your order has been received and will be processed soon. We will contact you shortly.
+          Thank you for exploring Nabil Mart. Your order has been received and will be processed soon. We will contact you shortly. 
+          <br /><br />
+          <strong>You can track your order status using your phone number on the Track Order page.</strong>
         </p>
-        <button 
-          onClick={() => navigate('/')}
-          className="bg-purple-600 text-white hover:bg-purple-700 px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg"
-        >
-          Continue Shopping
-        </button>
+        <div className="flex justify-center gap-4">
+          <button 
+            onClick={() => navigate('/track-order')}
+            className="bg-purple-100 text-purple-700 hover:bg-purple-200 px-8 py-3 rounded-xl font-bold transition-all"
+          >
+            Track Order
+          </button>
+          <button 
+            onClick={() => navigate('/')}
+            className="bg-purple-600 text-white hover:bg-purple-700 px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg"
+          >
+            Continue Shopping
+          </button>
+        </div>
       </div>
     );
   }

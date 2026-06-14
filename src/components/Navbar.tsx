@@ -69,6 +69,7 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="font-medium text-slate-600 hover:text-purple-600 transition-colors">Home</Link>
+            <Link to="/track-order" className="font-medium text-slate-600 hover:text-purple-600 transition-colors">Track Order</Link>
             
             <div className="relative group">
               <input 
@@ -122,6 +123,7 @@ export default function Navbar() {
               className="w-full pl-4 pr-10 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:border-purple-300 focus:ring-4 focus:ring-purple-500/10 transition-all placeholder:text-slate-400"
             />
           <Link to="/" onClick={() => setIsMenuOpen(false)} className="block font-medium py-2 text-slate-600 hover:text-purple-600">Home</Link>
+          <Link to="/track-order" onClick={() => setIsMenuOpen(false)} className="block font-medium py-2 text-slate-600 hover:text-purple-600">Track Order</Link>
           <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="block font-medium py-2 text-slate-600 hover:text-purple-600">Cart ({cartItemsCount})</Link>
           <Link to="/admin/login" onClick={() => setIsMenuOpen(false)} className="block font-medium py-2 text-slate-600 hover:text-purple-600">Admin Login</Link>
         </div>

@@ -4,7 +4,7 @@ import { db } from '../firebase';
 import { Product, CartItem, Order } from '../types';
 import { initialProducts } from '../data/mockData';
 
-interface AppContextType {
+export interface AppContextType {
   products: Product[];
   cart: CartItem[];
   orders: Order[];
@@ -15,6 +15,7 @@ interface AppContextType {
   clearCart: () => void;
   placeOrder: (orderDetails: Omit<Order, 'id' | 'date' | 'orderStatus'>) => void;
   updateOrderStatus: (orderId: string, status: Order['orderStatus']) => void;
+  updateOrderDetails: (orderId: string, updates: Partial<Order>) => void;
   loginAdmin: (username?: string, password?: string) => boolean;
   logoutAdmin: () => void;
   updateAdminCredentials: (username: string, password: string) => void;
@@ -169,6 +170,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateOrderDetails = async (orderId: string, updates: Partial<Order>) => {
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, ...updates } : o));
+    try {
+      await updateDoc(doc(db, 'orders', orderId), updates);
+    } catch (err) {
+      console.error('Failed to update order details in firestore:', err);
+    }
+  };
+
   const [adminCredentials, setAdminCredentials] = useState(() => {
     const saved = localStorage.getItem('adminCredentials');
     if (saved) {
@@ -237,7 +247,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider value={{
       products, cart, orders, isAdminAuthenticated,
       addToCart, removeFromCart, updateCartQuantity, clearCart,
-      placeOrder, updateOrderStatus,
+      placeOrder, updateOrderStatus, updateOrderDetails,
       loginAdmin, logoutAdmin, updateAdminCredentials, addProduct, updateProduct, deleteProduct
     }}>
       {children}

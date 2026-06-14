@@ -27,6 +27,8 @@ export interface Order {
   paymentStatus: 'Pending' | 'Paid' | 'Failed';
   orderStatus: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
   chatSessionId?: string;
+  deliveryNote?: string;
+  expectedDeliveryTime?: string;
 }
 
 export type PaymentMethod = 'Cash on Delivery' | 'bKash' | 'Nagad' | 'Rocket';

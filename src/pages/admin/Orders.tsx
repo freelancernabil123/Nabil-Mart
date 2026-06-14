@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
 
 export default function Orders() {
-  const { orders, updateOrderStatus, isAdminAuthenticated } = useAppContext();
+  const { orders, updateOrderStatus, updateOrderDetails, isAdminAuthenticated } = useAppContext();
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -23,14 +23,14 @@ export default function Orders() {
           <div className="p-8 text-center text-slate-500">No orders placed yet.</div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[800px]">
+            <table className="w-full text-left border-collapse min-w-[1000px]">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100 text-slate-500 text-sm">
                   <th className="p-4 font-medium">Order details</th>
                   <th className="p-4 font-medium">Customer Info</th>
                   <th className="p-4 font-medium">Items</th>
-                  <th className="p-4 font-medium">Payment</th>
-                  <th className="p-4 font-medium">Update Status</th>
+                  <th className="p-4 font-medium">Payment & Delivery</th>
+                  <th className="p-4 font-medium">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 border-t border-slate-100">
@@ -57,9 +57,33 @@ export default function Orders() {
                       </ul>
                     </td>
                     <td className="p-4">
-                      <span className="inline-block bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200">
-                        {order.paymentMethod}
-                      </span>
+                      <div className="space-y-3">
+                        <span className="inline-block bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200">
+                          {order.paymentMethod}
+                        </span>
+                        
+                        <div>
+                          <label className="block text-xs font-medium text-slate-500 mb-1">Expected Delivery</label>
+                          <input 
+                            type="text" 
+                            placeholder="e.g. 2 Days, 10th Aug" 
+                            defaultValue={order.expectedDeliveryTime}
+                            onBlur={(e) => updateOrderDetails(order.id, { expectedDeliveryTime: e.target.value })}
+                            className="w-full text-sm px-2 py-1 border border-slate-200 rounded focus:outline-none focus:border-blue-300"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-xs font-medium text-slate-500 mb-1">Delivery Note / Internal Reason</label>
+                          <textarea 
+                            rows={2}
+                            placeholder="Reason for delay or delivery update..." 
+                            defaultValue={order.deliveryNote}
+                            onBlur={(e) => updateOrderDetails(order.id, { deliveryNote: e.target.value })}
+                            className="w-full text-sm px-2 py-1 border border-slate-200 rounded focus:outline-none focus:border-blue-300"
+                          ></textarea>
+                        </div>
+                      </div>
                     </td>
                     <td className="p-4">
                       <select 
